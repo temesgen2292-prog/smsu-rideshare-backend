@@ -1,0 +1,57 @@
+/* === SMSU / Mustang color palette === */
+:root {
+  --mustang-purple: #4b2e83;
+  --mustang-gold: #ffcc33;
+  --mustang-light: #f8f5ff;
+
+  /* bootstrap overrides */
+  --bs-primary: var(--mustang-purple);
+  --bs-primary-rgb: 75, 46, 131;
+}
+
+/* Global */
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  background-color: var(--mustang-light);
+}
+
+/* Navbar */
+.mustang-navbar {
+  background: var(--mustang-purple);
+}
+
+/* Buttons */
+.btn-gold {
+  background: var(--mustang-gold);
+  border-color: var(--mustang-gold);
+}
+
+.btn-primary {
+  background-color: var(--mustang-purple);
+  border-color: var(--mustang-purple);
+}
+
+.btn-primary:hover {
+  background-color: #3a2264;
+  border-color: #3a2264;
+}
+
+.btn-outline-primary {
+  color: var(--mustang-purple);
+  border-color: var(--mustang-purple);
+}
+
+.btn-outline-primary:hover {
+  color: #fff;
+  background-color: var(--mustang-purple);
+  border-color: var(--mustang-purple);
+}
+
+/* Hero card */
+.hero-card {
+  background: #ffffff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}

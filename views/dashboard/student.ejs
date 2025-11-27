@@ -1,0 +1,121 @@
+<%- include('../partials/head') %>
+<%- include('../partials/navbar') %>
+
+<main class="container py-4">
+  <h2 class="mb-3">Student Dashboard</h2>
+  <p class="text-muted small mb-4">
+    Overview of your upcoming rides, ride requests, and recent messages.
+  </p>
+
+  <div class="row g-4">
+    <!-- Left column: stats + upcoming rides -->
+    <div class="col-md-7">
+      <div class="row g-3 mb-3">
+        <div class="col-sm-4">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <p class="mb-1 text-muted small">Upcoming Rides</p>
+              <h4 class="mb-0">3</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <p class="mb-1 text-muted small">Pending Requests</p>
+              <h4 class="mb-0 text-warning">2</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <p class="mb-1 text-muted small">Completed Trips</p>
+              <h4 class="mb-0 text-success">8</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card shadow-sm mb-3">
+        <div class="card-header fw-semibold">My Upcoming Rides</div>
+        <div class="card-body p-0">
+          <table class="table table-sm mb-0">
+            <thead>
+              <tr>
+                <th>Destination</th>
+                <th>Date & Time</th>
+                <th>Driver</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody class="small">
+              <tr>
+                <td>Sioux Falls</td>
+                <td>Today · 5:30 PM</td>
+                <td>Alex K.</td>
+                <td><span class="badge bg-success">Confirmed</span></td>
+              </tr>
+              <tr>
+                <td>Walmart Loop</td>
+                <td>Thu · 7:00 PM</td>
+                <td>Sara B.</td>
+                <td><span class="badge bg-warning text-dark">Pending</span></td>
+              </tr>
+              <tr>
+                <td>Minneapolis</td>
+                <td>Fri · 2:00 PM</td>
+                <td>John D.</td>
+                <td><span class="badge bg-success">Confirmed</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right column: ride requests + messages -->
+    <div class="col-md-5">
+      <div class="card shadow-sm mb-3">
+        <div class="card-header fw-semibold">My Ride Requests</div>
+        <div class="card-body small">
+          <ul class="list-unstyled mb-0">
+            <li class="mb-2">
+              <strong>Marshall → Sioux Falls</strong><br/>
+              Status:
+              <span class="badge bg-warning text-dark">Pending</span>
+            </li>
+            <li class="mb-2">
+              <strong>SMSU Campus → Walmart</strong><br/>
+              Status:
+              <span class="badge bg-success">Accepted</span>
+            </li>
+            <li>
+              <strong>Marshall → Minneapolis</strong><br/>
+              Status:
+              <span class="badge bg-danger">Rejected</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card shadow-sm">
+        <div class="card-header fw-semibold">Recent Messages</div>
+        <div class="card-body small">
+          <p class="mb-2">
+            <strong>From:</strong> Driver: Alex K.<br/>
+            <em>“I’ll pick you up in front of Central Field at 5:20 PM.”</em>
+          </p>
+          <hr/>
+          <p class="mb-0">
+            <strong>From:</strong> Driver: Sara B.<br/>
+            <em>“Can you confirm if you still need the Walmart ride?”</em>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>

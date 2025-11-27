@@ -1,0 +1,117 @@
+<%- include('../partials/head') %>
+<%- include('../partials/navbar') %>
+
+<main class="container py-4">
+  <h2 class="mb-3">Admin Dashboard</h2>
+  <p class="text-muted small mb-4">
+    Platform overview: user accounts, active rides, security, and reports.
+  </p>
+
+  <div class="row g-4">
+    <!-- Top stats -->
+    <div class="col-12">
+      <div class="row g-3">
+        <div class="col-md-3 col-sm-6">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <p class="mb-1 text-muted small">Total Users</p>
+              <h4 class="mb-0">126</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <p class="mb-1 text-muted small">Active Drivers</p>
+              <h4 class="mb-0">34</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <p class="mb-1 text-muted small">Rides This Week</p>
+              <h4 class="mb-0">52</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <p class="mb-1 text-muted small">Open Reports</p>
+              <h4 class="mb-0 text-danger">1</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom: tables -->
+    <div class="col-md-7">
+      <div class="card shadow-sm mb-3">
+        <div class="card-header fw-semibold">Recent User Accounts</div>
+        <div class="card-body p-0">
+          <table class="table table-sm mb-0 small">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Joined</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Dani Mamo</td>
+                <td>Student</td>
+                <td><span class="badge bg-success">Active</span></td>
+                <td>Nov 2</td>
+              </tr>
+              <tr>
+                <td>Amanuel Mamo</td>
+                <td>Driver</td>
+                <td><span class="badge bg-success">Active</span></td>
+                <td>Nov 1</td>
+              </tr>
+              <tr>
+                <td>Test User</td>
+                <td>Student</td>
+                <td><span class="badge bg-secondary">Inactive</span></td>
+                <td>Oct 30</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-5">
+      <div class="card shadow-sm mb-3">
+        <div class="card-header fw-semibold">Recent Platform Events</div>
+        <div class="card-body small">
+          <ul class="mb-0">
+            <li>New ride created: <strong>Marshall → Sioux Falls</strong></li>
+            <li>3 new drivers approved today</li>
+            <li>Security update: JWT token expiration set to 7 days</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card shadow-sm">
+        <div class="card-header fw-semibold">Open Reports</div>
+        <div class="card-body small">
+          <p class="mb-1">
+            <strong>Report #104:</strong> Late pickup concern
+          </p>
+          <p class="mb-1">Status: <span class="badge bg-warning text-dark">Under Review</span></p>
+          <p class="mb-0 text-muted">
+            Admins can review ride history, messages, and driver profile before
+            taking action.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>

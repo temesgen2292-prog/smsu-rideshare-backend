@@ -1,0 +1,124 @@
+<%- include('../partials/head') %>
+<%- include('../partials/navbar') %>
+
+<main class="container py-4">
+  <h2 class="mb-3">Driver Dashboard</h2>
+  <p class="text-muted small mb-4">
+    Manage your active rides, incoming requests, and recent passenger messages.
+  </p>
+
+  <div class="row g-4">
+    <!-- Left: stats + active rides -->
+    <div class="col-md-7">
+      <div class="row g-3 mb-3">
+        <div class="col-sm-4">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <p class="mb-1 text-muted small">Active Rides</p>
+              <h4 class="mb-0">4</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <p class="mb-1 text-muted small">Pending Requests</p>
+              <h4 class="mb-0 text-warning">3</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <p class="mb-1 text-muted small">Seats Filled</p>
+              <h4 class="mb-0 text-success">9 / 12</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card shadow-sm mb-3">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span class="fw-semibold">My Active Rides</span>
+          <a href="#" class="btn btn-sm btn-gold text-dark">Post New Ride</a>
+        </div>
+        <div class="card-body p-0">
+          <table class="table table-sm mb-0">
+            <thead>
+              <tr>
+                <th>Route</th>
+                <th>Date & Time</th>
+                <th>Seats</th>
+                <th>Requests</th>
+              </tr>
+            </thead>
+            <tbody class="small">
+              <tr>
+                <td>Marshall → Sioux Falls</td>
+                <td>Today · 5:30 PM</td>
+                <td>1/3 left</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Campus → Walmart</td>
+                <td>Thu · 7:00 PM</td>
+                <td>2/4 left</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>Marshall → Minneapolis</td>
+                <td>Fri · 2:00 PM</td>
+                <td>0/3 left</td>
+                <td>3</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right: incoming requests + messages -->
+    <div class="col-md-5">
+      <div class="card shadow-sm mb-3">
+        <div class="card-header fw-semibold">Incoming Ride Requests</div>
+        <div class="card-body small">
+          <div class="mb-3">
+            <p class="mb-1">
+              <strong>Student:</strong> Dani M.<br/>
+              <strong>Ride:</strong> Marshall → Sioux Falls
+            </p>
+            <p class="mb-1"><em>“I need to catch a 7 PM flight, can I join?”</em></p>
+            <span class="badge bg-warning text-dark">Pending</span>
+          </div>
+          <hr/>
+          <div>
+            <p class="mb-1">
+              <strong>Student:</strong> Amanuel T.<br/>
+              <strong>Ride:</strong> Campus → Walmart
+            </p>
+            <p class="mb-1"><em>“Can we stop by CVS on the way back?”</em></p>
+            <span class="badge bg-success">Accepted</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card shadow-sm">
+        <div class="card-header fw-semibold">Recent Passenger Messages</div>
+        <div class="card-body small">
+          <p class="mb-2">
+            <strong>From Dani:</strong>
+            <em>“I’ll be at the Student Center entrance at 5:20.”</em>
+          </p>
+          <hr/>
+          <p class="mb-0">
+            <strong>From Amanuel:</strong>
+            <em>“Thanks again for the ride yesterday!”</em>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>
