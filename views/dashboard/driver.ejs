@@ -1,58 +1,64 @@
-<%- include('../partials/head') %>
+<%- include('../partials/head', { title: 'Driver Dashboard - Mustang RideShare' }) %>
 <%- include('../partials/navbar') %>
 
-<main class="container py-4">
-  <h2 class="mb-3">Driver Dashboard</h2>
-  <p class="text-muted small mb-4">
+<div class="container my-5">
+  <h1 class="mb-3">Driver Dashboard</h1>
+  <p class="text-muted mb-4">
     Manage your active rides, incoming requests, and recent passenger messages.
   </p>
 
-  <div class="row g-4">
-    <!-- Left: stats + active rides -->
-    <div class="col-md-7">
-      <div class="row g-3 mb-3">
-        <div class="col-sm-4">
-          <div class="card shadow-sm">
-            <div class="card-body text-center">
-              <p class="mb-1 text-muted small">Active Rides</p>
-              <h4 class="mb-0">4</h4>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="card shadow-sm">
-            <div class="card-body text-center">
-              <p class="mb-1 text-muted small">Pending Requests</p>
-              <h4 class="mb-0 text-warning">3</h4>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="card shadow-sm">
-            <div class="card-body text-center">
-              <p class="mb-1 text-muted small">Seats Filled</p>
-              <h4 class="mb-0 text-success">9 / 12</h4>
-            </div>
-          </div>
+  <div class="row g-4 mb-4">
+    <div class="col-md-3">
+      <div class="card summary-card">
+        <div class="card-body text-center">
+          <div class="summary-label">Active Rides</div>
+          <div class="summary-value">4</div>
         </div>
       </div>
+    </div>
 
-      <div class="card shadow-sm mb-3">
-        <div class="card-header d-flex justify-content-between align-items-center">
-          <span class="fw-semibold">My Active Rides</span>
-          <a href="#" class="btn btn-sm btn-gold text-dark">Post New Ride</a>
+    <div class="col-md-3">
+      <div class="card summary-card">
+        <div class="card-body text-center">
+          <div class="summary-label">Pending Requests</div>
+          <div class="summary-value text-warning">3</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card summary-card">
+        <div class="card-body text-center">
+          <div class="summary-label">Seats Filled</div>
+          <div class="summary-value text-success">9 / 12</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-lg-7">
+      <div class="card mb-4">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 class="mb-0">My Active Rides</h5>
+          <!-- ✅ Turned into a link that goes to /rides/new -->
+          <a href="/rides/new" class="btn btn-gold btn-sm">
+            Post New Ride
+          </a>
         </div>
         <div class="card-body p-0">
-          <table class="table table-sm mb-0">
+          <table class="table mb-0">
             <thead>
               <tr>
                 <th>Route</th>
-                <th>Date & Time</th>
+                <th>Date &amp; Time</th>
                 <th>Seats</th>
                 <th>Requests</th>
               </tr>
             </thead>
-            <tbody class="small">
+            <tbody>
               <tr>
                 <td>Marshall → Sioux Falls</td>
                 <td>Today · 5:30 PM</td>
@@ -75,50 +81,68 @@
           </table>
         </div>
       </div>
-
     </div>
 
-    <!-- Right: incoming requests + messages -->
-    <div class="col-md-5">
-      <div class="card shadow-sm mb-3">
-        <div class="card-header fw-semibold">Incoming Ride Requests</div>
-        <div class="card-body small">
+    <div class="col-lg-5">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5 class="mb-0">Incoming Ride Requests</h5>
+        </div>
+        <div class="card-body">
           <div class="mb-3">
             <p class="mb-1">
-              <strong>Student:</strong> Dani M.<br/>
+              <strong>Student:</strong> Dani M.<br />
               <strong>Ride:</strong> Marshall → Sioux Falls
             </p>
-            <p class="mb-1"><em>“I need to catch a 7 PM flight, can I join?”</em></p>
-            <span class="badge bg-warning text-dark">Pending</span>
+            <p class="mb-1 text-muted fst-italic">
+              "I need to catch a 7 PM flight, can I join?"
+            </p>
+            <span class="badge rounded-pill bg-warning text-dark">Pending</span>
           </div>
-          <hr/>
-          <div>
+
+          <hr />
+
+          <div class="mb-3">
             <p class="mb-1">
-              <strong>Student:</strong> Amanuel T.<br/>
+              <strong>Student:</strong> Amanuel T.<br />
               <strong>Ride:</strong> Campus → Walmart
             </p>
-            <p class="mb-1"><em>“Can we stop by CVS on the way back?”</em></p>
-            <span class="badge bg-success">Accepted</span>
+            <p class="mb-1 text-muted fst-italic">
+              "Can we stop by CVS on the way back?"
+            </p>
+            <span class="badge rounded-pill bg-success">Accepted</span>
           </div>
         </div>
       </div>
 
-      <div class="card shadow-sm">
-        <div class="card-header fw-semibold">Recent Passenger Messages</div>
-        <div class="card-body small">
-          <p class="mb-2">
-            <strong>From Dani:</strong>
-            <em>“I’ll be at the Student Center entrance at 5:20.”</em>
-          </p>
-          <hr/>
-          <p class="mb-0">
-            <strong>From Amanuel:</strong>
-            <em>“Thanks again for the ride yesterday!”</em>
-          </p>
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">Recent Passenger Messages</h5>
+        </div>
+        <div class="card-body">
+          <div class="mb-3">
+            <p class="mb-1">
+              <strong>From Dani:</strong>
+              <span class="fst-italic">
+                "I'll be at the Student Center entrance at 5:20."
+              </span>
+            </p>
+          </div>
+
+          <hr />
+
+          <div class="mb-0">
+            <p class="mb-1">
+              <strong>From Amanuel:</strong>
+              <span class="fst-italic">
+                "Thanks again for the ride yesterday!"
+              </span>
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</main>
+</div>
 
 <%- include('../partials/footer') %>
