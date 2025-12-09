@@ -1,4 +1,7 @@
 // server.js
+console.log("🔥🔥🔥 RUNNING SERVER.JS FROM:", __filename);
+console.log("📌 DIRNAME:", __dirname);
+console.log("🟢 VERSION: TEMESGEN-TEST-V5");
 
 const express = require('express');
 const dotenv = require('dotenv');
@@ -11,19 +14,17 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 
-//  Auth-related imports
+// Auth-related imports
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('./models/User');
+const Ride = require('./models/Ride');
 const { protect, requireRole } = require('./middleware/auth');
 
 // API routes
 const usersRoutes = require('./routes/users');
 const ridesRoutes = require('./routes/rides');
 const messagesRoutes = require('./routes/messages');
-
-//  We are NOT using old authRoutes anymore
-// const authRoutes = require('./routes/auth.routes');
 
 dotenv.config();
 const { connectDB } = require('./config/db');
@@ -38,7 +39,7 @@ app.set('views', path.join(__dirname, 'views'));
 /* ---------- STATIC FILES ---------- */
 app.use(express.static(path.join(__dirname, 'public')));
 
-// alias /styles.css to the real file in /public/css/style.css
+// alias /styles.css to public/css/style.css
 app.get('/styles.css', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'css', 'style.css'));
 });
@@ -46,7 +47,7 @@ app.get('/styles.css', (req, res) => {
 /* ---------- SECURITY / CORE MIDDLEWARE ---------- */
 app.use(
   helmet({
-    contentSecurityPolicy: false, // okay for dev, tighten later
+    contentSecurityPolicy: false,
   })
 );
 
@@ -61,16 +62,12 @@ app.use(
 
 app.use(hpp());
 app.use(compression());
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(morgan('dev'));
 
-// ❌ NO express-session here – we are using JWT cookies
-
 /* ---------- ATTACH req.user FROM JWT ---------- */
-// This reads authToken from cookies and sets req.user = { id, fullName, email, role }
 app.use(protect);
 
 /* ---------- GLOBAL VARIABLES FOR EJS ---------- */
@@ -82,7 +79,6 @@ app.use((req, res, next) => {
 
 /* ---------- BASIC PAGES ---------- */
 
-// Optional home route – you can point this anywhere you want
 app.get('/', (req, res) => {
   res.redirect('/login');
 });
@@ -105,7 +101,7 @@ app.get('/register', (req, res) => {
   });
 });
 
-// Logout – clear cookie and redirect to login
+// Logout
 app.get('/logout', (req, res) => {
   res.clearCookie('authToken');
   return res.redirect('/login');
@@ -116,7 +112,6 @@ app.get('/logout', (req, res) => {
 app.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
-
     const user = await User.findOne({ email: email.toLowerCase() });
 
     if (!user) {
@@ -128,28 +123,22 @@ app.post('/login', async (req, res) => {
       return res.redirect('/login?error=Invalid+email+or+password');
     }
 
-    // Create JWT token  (fallback secret so it never crashes)
+    // Create JWT
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET || 'devsecret',
       { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
     );
 
-    // Set httpOnly cookie
     res.cookie('authToken', token, {
       httpOnly: true,
-      secure: false, // set to true when you use HTTPS in production
+      secure: false,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    // Redirect based on role
-    if (user.role === 'student') {
-      return res.redirect('/dashboard/student');
-    } else if (user.role === 'driver') {
-      return res.redirect('/dashboard/driver');
-    } else {
-      return res.redirect('/dashboard/admin');
-    }
+    if (user.role === 'student') return res.redirect('/dashboard/student');
+    if (user.role === 'driver') return res.redirect('/dashboard/driver');
+    return res.redirect('/dashboard/admin');
   } catch (err) {
     console.error('Login error:', err);
     return res.redirect('/login?error=Something+went+wrong');
@@ -172,7 +161,6 @@ app.post('/register', async (req, res) => {
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
-
     const user = await User.create({
       fullName,
       email: email.toLowerCase(),
@@ -180,11 +168,10 @@ app.post('/register', async (req, res) => {
       role: role || 'student',
     });
 
-    // Auto-login after registration
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET || 'devsecret',
-      { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+      { expiresIn: '7d' }
     );
 
     res.cookie('authToken', token, {
@@ -193,7 +180,6 @@ app.post('/register', async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    // show success page OR just send them to login
     res.render('auth/register-success', {
       title: 'Registration Complete - Mustang RideShare',
       name: user.fullName,
@@ -215,52 +201,69 @@ app.post('/register', async (req, res) => {
 app.get('/dashboard/student', (req, res) => {
   if (!req.user) return res.redirect('/login');
   if (req.user.role !== 'student') return res.status(403).send('Access denied');
-
-  res.render('dashboard/student', {
-    title: 'Student Dashboard - Mustang RideShare',
-    user: req.user,
-  });
+  res.render('dashboard/student', { title: 'Student Dashboard', user: req.user });
 });
 
-app.get('/dashboard/driver', (req, res) => {
-  if (!req.user) return res.redirect('/login');
-  if (req.user.role !== 'driver') return res.status(403).send('Access denied');
+app.get('/dashboard/driver', protect, requireRole('driver'), async (req, res) => {
+  try {
+    const rides = await Ride.find({ driver: req.user.id }).sort({ departureTime: 1 });
+    console.log("Driver dashboard loaded. Rides count:", rides.length);
+    
+    return res.render("dashboard/driver", {
+      title: 'Driver Dashboard - Mustang RideShare',
+      user: req.user,
+      rides: rides
+    });
 
-  res.render('dashboard/driver', {
-    title: 'Driver Dashboard - Mustang RideShare',
-    user: req.user,
-  });
+  } catch (err) {
+    console.error("Dashboard load error:", err);
+    return res.status(500).send("Could not load rides");
+  }
 });
 
-// ✅ Simple "Post New Ride" page for drivers
-app.get('/rides/new', (req, res) => {
-  if (!req.user) return res.redirect('/login');
-  if (req.user.role !== 'driver') return res.status(403).send('Access denied');
 
+app.get('/dashboard/admin', (req, res) => {
+  if (!req.user) return res.redirect('/login');
+  if (req.user.role !== 'admin') return res.status(403).send('Access denied');
+  res.render('dashboard/admin', { title: 'Admin Dashboard', user: req.user });
+});
+
+/* ---------- CLEAN FINAL VERSION: RIDE FORM ROUTES ---------- */
+
+// Show "Post New Ride" form
+app.get('/rides/new', protect, requireRole('driver'), (req, res) => {
   res.render('rides/new', {
     title: 'Post New Ride - Mustang RideShare',
     user: req.user,
   });
 });
 
-app.get('/dashboard/admin', (req, res) => {
-  if (!req.user) return res.redirect('/login');
-  if (req.user.role !== 'admin') return res.status(403).send('Access denied');
+// Handle form submission
+app.post('/rides/new', protect, requireRole('driver'), async (req, res) => {
+  try {
+    const { from, to, date, time, seats, notes } = req.body;
+    const departureTime = new Date(`${date}T${time}`);
 
-  res.render('dashboard/admin', {
-    title: 'Admin Dashboard - Mustang RideShare',
-    user: req.user,
-  });
+    await Ride.create({
+      driver: req.user.id,
+      from,
+      to,
+      departureTime,
+      availableSeats: seats,
+      notes,
+    });
+
+    return res.redirect('/dashboard/driver?success=Ride+posted');
+  } catch (err) {
+    console.error('Ride creation error:', err);
+    return res.redirect('/dashboard/driver?error=Could+not+save+ride');
+  }
 });
 
 /* ---------- API ROUTES ---------- */
 
-app.get('/api/health', (req, res) => {
-  res.json({ ok: true, name: 'Mustang RideShare API', version: '1.0.0' });
-});
-
-app.use('/api/users', usersRoutes);
 app.use('/api/rides', ridesRoutes);
+app.use('/api/users', usersRoutes);
 app.use('/api/messages', messagesRoutes);
 
 /* ---------- ERROR HANDLER ---------- */

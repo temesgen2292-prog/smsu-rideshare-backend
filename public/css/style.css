@@ -1,57 +1,149 @@
-/* === SMSU / Mustang color palette === */
-:root {
-  --mustang-purple: #4b2e83;
-  --mustang-gold: #ffcc33;
-  --mustang-light: #f8f5ff;
+/* ============================================
+   Mustang RideShare – Gold & White Theme
+   Brand Colors:
+   Gold: #E2B22C
+   Dark Text: #222222
+   Light Gray Background: #f9f9f9
+   ============================================ */
 
-  /* bootstrap overrides */
-  --bs-primary: var(--mustang-purple);
-  --bs-primary-rgb: 75, 46, 131;
+/* Global Reset */
+body {
+  background-color: #ffffff;
+  color: #222;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-/* Global */
-body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
-  background-color: var(--mustang-light);
+/* Centered container for login/register */
+.auth-wrapper {
+  max-width: 420px;
+  margin: 50px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+
+/* Gold Titles */
+.page-title {
+  color: #E2B22C;
+  font-weight: 700;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+/* Gold Buttons */
+.btn-gold {
+  background-color: #E2B22C;
+  color: #222;
+  border: none;
+  font-weight: 600;
+}
+
+.btn-gold:hover {
+  background-color: #c89c22;
+  color: #111;
+}
+
+/* Links inside Auth pages */
+.auth-link {
+  color: #E2B22C;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
+/* Dashboard Cards */
+.dashboard-card {
+  border: 1px solid #ddd;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  transition: 0.2s;
+}
+
+.dashboard-card:hover {
+  background: #f9f1d0;
+  border-color: #E2B22C;
+  transform: translateY(-3px);
+}
+
+/* Dashboard Headers */
+.dashboard-header {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #E2B22C;
+  margin-bottom: 25px;
+}
+
+/* Table Styling */
+.table-gold thead {
+  background-color: #E2B22C !important;
+  color: #222;
+  font-weight: 600;
+}
+
+.table-gold tbody tr:hover {
+  background: #fff8db;
 }
 
 /* Navbar */
-.mustang-navbar {
-  background: var(--mustang-purple);
+.navbar {
+  border-bottom: 3px solid #c89c22;
 }
 
-/* Buttons */
-.btn-gold {
-  background: var(--mustang-gold);
-  border-color: var(--mustang-gold);
+.navbar-brand {
+  display: flex;
+  align-items: center; 
 }
 
-.btn-primary {
-  background-color: var(--mustang-purple);
-  border-color: var(--mustang-purple);
+.nav-link {
+  font-weight: 600;
 }
 
-.btn-primary:hover {
-  background-color: #3a2264;
-  border-color: #3a2264;
+.nav-link:hover {
+  color: #111 !important;
 }
 
-.btn-outline-primary {
-  color: var(--mustang-purple);
-  border-color: var(--mustang-purple);
+/* Footer */
+footer {
+  margin-top: 40px;
+  padding: 20px 0;
+  background-color: #f9f9f9;
+  text-align: center;
+  color: #222;
+  border-top: 1px solid #ddd;
+}
+/* Navbar Logo Styling */
+.navbar-logo {
+  height: 32px;        
+  width: auto;         
+  object-fit: contain; 
+  margin-right: 8px;
+  display: inline-block;
 }
 
-.btn-outline-primary:hover {
-  color: #fff;
-  background-color: var(--mustang-purple);
-  border-color: var(--mustang-purple);
+/*  Navbar Logo Size & Alignment */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-/* Hero card */
-.hero-card {
-  background: #ffffff;
-  border-radius: 1rem;
-  padding: 1.5rem;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+.navbar-logo {
+  height: 45px;     
+  width: auto;
+  object-fit: contain;
+}
+/* Mustang RideShare Title Styling */
+.navbar-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #222;
+  letter-spacing: 0.5px;
 }
